@@ -1,3 +1,4 @@
 [[redirects]]
-from = '/dashboard'
-to = '/dashboard'
+from = '/*'
+to = '/index.html'
+status = 200
