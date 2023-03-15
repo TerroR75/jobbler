@@ -61,7 +61,8 @@ function App() {
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='dashboard' element={<Dashboard />}>
-                <Route index path='*' element={<ApplSent />} />
+                <Route index element={<ApplSent />} />
+                <Route path='sent' element={<ApplSent />} />
                 <Route path='response' element={<ApplResponse />} />
                 <Route path='archived' element={<ApplArchived />} />
                 <Route path='settings' element={<Settings isDarkModeEnabled={darkMode} changeDarkMode={handleThemeChage} />} />
