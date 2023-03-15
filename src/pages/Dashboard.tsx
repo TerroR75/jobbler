@@ -1,22 +1,13 @@
 import { Box, Typography } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
-
-const classes = {
-  flex: {
-    display: 'flex',
-  },
-  fullSize: {
-    width: '100vw',
-    height: '100vh',
-  },
-};
+import { classes } from '../styles/classes';
 
 function Dashboard() {
   return (
-    <Box sx={classes.flex}>
+    <Box sx={classes.flexRow}>
       <Sidebar />
-      <Box sx={classes.fullSize}>
+      <Box sx={classes.fullViewSize}>
         <Outlet />
       </Box>
     </Box>

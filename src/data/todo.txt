@@ -1,0 +1,1 @@
+All files in this folder are temporary. Those will be replaced with custom MySQL database when everything is ready.
