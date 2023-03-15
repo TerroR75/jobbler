@@ -12,17 +12,44 @@ import Dashboard from './pages/Dashboard';
 import ApplSent from './components/ApplSent';
 import ApplResponse from './components/ApplResponse';
 import ApplArchived from './components/ApplArchived';
+import Settings from './pages/Settings';
+import Profile from './pages/Profile';
 
 function App() {
   // THEME CHANGING
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+  /* State below checks first if there is localstorage for theme override
+   -> if there isn't -> use system preference from code above (prefersDarkMode)
+   -> else read localstorage (if it exists) and use it instead
+  */
   const [darkMode, setDarkMode] = useState((): boolean => {
-    if (prefersDarkMode) {
-      return true;
+    const override = localStorage.getItem('themeoverride');
+    if (override) {
+      if (override === 'dark') {
+        return true;
+      } else {
+        return false;
+      }
     } else {
-      return false;
+      if (prefersDarkMode) {
+        return true;
+      } else {
+        return false;
+      }
     }
   });
+
+  /*
+  Function below runs every time user click on theme switch inside Settings page,
+  if so -> it means that app has to create new localstorage item for a specific theme based on current theme,
+  so the next time app renders it checks for this item and sets overriden theme
+  */
+  function handleThemeChage(): void {
+    const mode = darkMode ? 'light' : 'dark';
+    localStorage.setItem('themeoverride', mode);
+    darkMode ? setDarkMode(false) : setDarkMode(true);
+  }
   const darkTheme = createTheme(darkThemeOptions);
   const lightTheme = createTheme(lightThemeOptions);
 
@@ -37,6 +64,8 @@ function App() {
                 <Route index path='*' element={<ApplSent />} />
                 <Route path='response' element={<ApplResponse />} />
                 <Route path='archived' element={<ApplArchived />} />
+                <Route path='settings' element={<Settings isDarkModeEnabled={darkMode} changeDarkMode={handleThemeChage} />} />
+                <Route path='profile' element={<Profile />} />
               </Route>
             </Routes>
           </BrowserRouter>
