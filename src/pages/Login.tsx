@@ -1,10 +1,12 @@
 import { Container, Box, Paper, Typography, FormControl, FormLabel, FormGroup, TextField, Button, Link } from '@mui/material';
 import { classes } from '../styles/classes';
+import axios, { AxiosError } from 'axios';
 
 // VALIDATION ON CLIENT SIDE
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import YupPassword from 'yup-password';
+
 YupPassword(yup);
 const validationSchema = yup.object({
   email: yup.string().email('Enter a valid email').required('Email is required'),
@@ -18,8 +20,19 @@ function Login(props: any) {
       password: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      // alert(JSON.stringify(values, null, 2));
+      try {
+        const response = await axios.post('/api/auth/login', values);
+      } catch (error) {
+        if (error && error instanceof AxiosError) {
+          throw new Error(error.response?.data.message);
+        } else if (error && error instanceof Error) {
+          throw new Error(error.message);
+        }
+
+        console.log(error);
+      }
     },
   });
 
@@ -34,7 +47,7 @@ function Login(props: any) {
   return (
     <Container sx={[classes.fullViewSize, classes.flexCol, classes.alignFlexCenter]}>
       <Box sx={[classes.flexCol, classes.alignFlexCenter, { width: '100%', height: '100%' }]}>
-        <form onSubmit={formik.handleSubmit}>
+        <form method='POST' onSubmit={formik.handleSubmit}>
           <Paper elevation={6} sx={[classes.fullRelatSize, { width: 'max(300px, 30vw)', height: 'max(450px, 30vh)', p: 3 }]}>
             <Typography variant='h4' textAlign='center' sx={{ m: 2 }}>
               Sign In

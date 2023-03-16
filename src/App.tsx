@@ -15,6 +15,7 @@ import ApplArchived from './components/ApplArchived';
 import Settings from './pages/Settings';
 import Profile from './pages/Profile';
 import SignIn from './pages/SignIn';
+import { AuthProvider } from 'react-auth-kit';
 
 function App() {
   // THEME CHANGING
@@ -58,20 +59,22 @@ function App() {
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <Box sx={{ minWidth: '100vw', minHeight: '100vh' }}>
         <Paper sx={{ borderRadius: '0' }}>
-          <BrowserRouter>
-            <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/signin' element={<SignIn />} />
-              <Route path='dashboard' element={<Dashboard />}>
-                <Route index element={<ApplSent />} />
-                <Route path='sent' element={<ApplSent />} />
-                <Route path='response' element={<ApplResponse />} />
-                <Route path='archived' element={<ApplArchived />} />
-                <Route path='settings' element={<Settings isDarkModeEnabled={darkMode} changeDarkMode={handleThemeChage} />} />
-                <Route path='profile' element={<Profile />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
+          <AuthProvider authType={'cookie'} authName={'_auth'} cookieDomain={window.location.hostname} cookieSecure={false}>
+            <BrowserRouter>
+              <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/signin' element={<SignIn />} />
+                <Route path='dashboard' element={<Dashboard />}>
+                  <Route index element={<ApplSent />} />
+                  <Route path='sent' element={<ApplSent />} />
+                  <Route path='response' element={<ApplResponse />} />
+                  <Route path='archived' element={<ApplArchived />} />
+                  <Route path='settings' element={<Settings isDarkModeEnabled={darkMode} changeDarkMode={handleThemeChage} />} />
+                  <Route path='profile' element={<Profile />} />
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </AuthProvider>
         </Paper>
       </Box>
     </ThemeProvider>

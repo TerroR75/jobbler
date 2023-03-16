@@ -18,6 +18,7 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
+    "strictFunctionTypes": false
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
