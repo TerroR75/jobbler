@@ -82,6 +82,9 @@
 <img style='max-width: 500px' src='./src/assets/readmepreview.png'>
 
 App is made especially for new developers (myself included) to help them track job applications.
+<br>
+For backend side of the project check out this repo:
+https://github.com/TerroR75/jobbler-backend
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -194,7 +197,8 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Contact
 
-Project Link: [https://github.com/TerroR75/jobbler](https://github.com/TerroR75/jobbler)
+- Project's frontend: [https://github.com/TerroR75/jobbler](https://github.com/TerroR75/jobbler)
+- Project's backend: [https://github.com/TerroR75/jobbler-backend](https://github.com/TerroR75/jobbler-backend)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
