@@ -1,6 +1,21 @@
-import { Container, Box, Paper, Typography, FormControl, FormLabel, FormGroup, TextField, Button, Link } from '@mui/material';
+import {
+  Container,
+  Box,
+  Paper,
+  Typography,
+  FormControl,
+  FormLabel,
+  FormGroup,
+  TextField,
+  Button,
+  Link,
+  FormHelperText,
+} from '@mui/material';
 import { classes } from '../styles/classes';
+import { useState } from 'react';
+import { useSignIn } from 'react-auth-kit';
 import axios, { AxiosError } from 'axios';
+import { useNavigate } from 'react-router';
 
 // VALIDATION ON CLIENT SIDE
 import { useFormik } from 'formik';
@@ -14,6 +29,11 @@ const validationSchema = yup.object({
 });
 
 function Login(props: any) {
+  const [responseError, setResponseError] = useState('');
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const signIn = useSignIn();
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -24,6 +44,19 @@ function Login(props: any) {
       // alert(JSON.stringify(values, null, 2));
       try {
         const response = await axios.post('/api/auth/login', values);
+        setResponseError('');
+        signIn({
+          token: response.data.token,
+          expiresIn: 3600,
+          tokenType: 'Bearer',
+          authState: { email: values.email, name: response.data.name },
+        });
+
+        console.log(response);
+        setIsButtonDisabled(true);
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 1000);
       } catch (error) {
         if (error && error instanceof AxiosError) {
           throw new Error(error.response?.data.message);
@@ -40,9 +73,9 @@ function Login(props: any) {
     props.changeForm(false);
   }
 
-  function submitForm(e: any) {
-    // e.preventDefault();
-    alert(e);
+  function handleHelpers(e: any) {
+    if (responseError !== '') setResponseError('');
+    formik.handleChange(e);
   }
   return (
     <Container sx={[classes.fullViewSize, classes.flexCol, classes.alignFlexCenter]}>
@@ -55,7 +88,7 @@ function Login(props: any) {
             <FormControl sx={{ width: '100%' }} variant='filled'>
               <FormGroup sx={[classes.flexCol, classes.alignFlexCenter, { width: '100%' }]}>
                 <TextField
-                  onChange={formik.handleChange}
+                  onChange={handleHelpers}
                   error={formik.touched.email && Boolean(formik.errors.email)}
                   helperText={formik.touched.email && formik.errors.email}
                   name='email'
@@ -65,7 +98,7 @@ function Login(props: any) {
                   label='Email'
                 />
                 <TextField
-                  onChange={formik.handleChange}
+                  onChange={handleHelpers}
                   error={formik.touched.password && Boolean(formik.errors.password)}
                   helperText={formik.touched.password && formik.errors.password}
                   name='password'
@@ -74,13 +107,16 @@ function Login(props: any) {
                   id='login-password'
                   label='Password'
                 />
+                <FormHelperText sx={{ my: 2 }} error={true} id='my-helper-text'>
+                  {responseError}
+                </FormHelperText>
                 <Typography>
                   Don't have an account?{' '}
                   <Link onClick={handleFormChange} sx={{ cursor: 'pointer' }} underline='hover'>
                     Register here!
                   </Link>{' '}
                 </Typography>
-                <Button type='submit' sx={{ width: '150px', marginTop: 3 }} variant='contained'>
+                <Button type='submit' disabled={isButtonDisabled} sx={{ width: '150px', marginTop: 3 }} variant='contained'>
                   Login
                 </Button>
               </FormGroup>

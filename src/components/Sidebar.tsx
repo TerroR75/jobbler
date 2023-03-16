@@ -10,9 +10,11 @@ import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import MarkEmailReadOutlinedIcon from '@mui/icons-material/MarkEmailReadOutlined';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 // REACT ROUTER
 import { useNavigate } from 'react-router-dom';
+import { useSignOut } from 'react-auth-kit';
 
 const drawerWidth = 250;
 const classes = {
@@ -34,6 +36,7 @@ type Link = {
 
 function Sidebar() {
   const history = useNavigate();
+  const signOut = useSignOut();
   const links: Link[][] = [
     [
       {
@@ -65,6 +68,11 @@ function Sidebar() {
       },
     ],
   ];
+
+  function logout() {
+    signOut();
+    history('/signin');
+  }
 
   return (
     <Drawer sx={classes.drawer} anchor='left' variant='permanent'>
@@ -100,6 +108,13 @@ function Sidebar() {
             </ListItem>
           );
         })}
+        <ListItem onClick={logout} button>
+          <ListItemIcon>
+            <LogoutOutlinedIcon color='primary' />
+          </ListItemIcon>
+          <ListItemText primary='Logout' />
+        </ListItem>
+        ;
       </Box>
     </Drawer>
   );

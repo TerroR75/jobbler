@@ -10,8 +10,10 @@ import {
   Button,
   Link,
   Tooltip,
+  FormHelperText,
 } from '@mui/material';
 import { classes } from '../styles/classes';
+import { useState } from 'react';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 
 // VALIDATION ON CLIENT SIDE
@@ -46,6 +48,9 @@ const validationSchema = yup.object({
 
 // COMPONENT
 function Register(props: any) {
+  const [responseError, setResponseError] = useState('');
+  const [responseSuccess, setResponceSuccess] = useState('');
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -58,15 +63,23 @@ function Register(props: any) {
     onSubmit: async (values) => {
       try {
         const response = await axios.post('/api/auth/register', values);
-        handleFormChange();
+        setResponceSuccess(response.data + ' Redirecting...');
+        setResponseError('');
+
+        // Redirect user back to login page
+        setTimeout(() => {
+          handleFormChange();
+        }, 1500);
       } catch (error) {
         if (error && error instanceof AxiosError) {
+          setResponseError(error.response?.data);
+          setResponceSuccess('');
           throw new Error(error.response?.data.message);
         } else if (error && error instanceof Error) {
           throw new Error(error.message);
+        } else {
+          console.log(error);
         }
-
-        console.log(error);
       }
     },
   });
@@ -75,9 +88,8 @@ function Register(props: any) {
     props.changeForm(true);
   }
 
-  function submitForm(e: any) {
-    e.preventDefault();
-    alert(e);
+  function handleHelpers(e: any) {
+    if (responseError !== '') setResponseError('');
   }
   return (
     <Container sx={[classes.fullViewSize, classes.flexCol, classes.alignFlexCenter]}>
@@ -145,8 +157,14 @@ function Register(props: any) {
                   name='passwordC'
                   label='Confirm password'
                 />
-                <Button type='submit' sx={{ width: '150px', marginTop: 3 }} variant='contained'>
-                  register
+                <FormHelperText sx={{ my: 2, color: 'green' }} id='my-helper-text-success'>
+                  {responseSuccess}
+                </FormHelperText>
+                <FormHelperText sx={{ my: 2 }} error={responseError ? true : false} id='my-helper-text-error'>
+                  {responseError}
+                </FormHelperText>
+                <Button onClick={handleHelpers} type='submit' sx={{ width: '150px', marginTop: 3 }} variant='contained'>
+                  Register
                 </Button>
               </FormGroup>
             </FormControl>

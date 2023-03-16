@@ -15,7 +15,7 @@ import ApplArchived from './components/ApplArchived';
 import Settings from './pages/Settings';
 import Profile from './pages/Profile';
 import SignIn from './pages/SignIn';
-import { AuthProvider } from 'react-auth-kit';
+import { AuthProvider, RequireAuth } from 'react-auth-kit';
 
 function App() {
   // THEME CHANGING
@@ -64,7 +64,14 @@ function App() {
               <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/signin' element={<SignIn />} />
-                <Route path='dashboard' element={<Dashboard />}>
+                <Route
+                  path='dashboard'
+                  element={
+                    <RequireAuth loginPath='/signin'>
+                      <Dashboard />
+                    </RequireAuth>
+                  }
+                >
                   <Route index element={<ApplSent />} />
                   <Route path='sent' element={<ApplSent />} />
                   <Route path='response' element={<ApplResponse />} />
