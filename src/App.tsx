@@ -14,6 +14,7 @@ import ApplResponse from './components/ApplResponse';
 import ApplArchived from './components/ApplArchived';
 import Settings from './pages/Settings';
 import Profile from './pages/Profile';
+import SignIn from './pages/SignIn';
 
 function App() {
   // THEME CHANGING
@@ -60,6 +61,7 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path='/' element={<Home />} />
+              <Route path='/signin' element={<SignIn />} />
               <Route path='dashboard' element={<Dashboard />}>
                 <Route index element={<ApplSent />} />
                 <Route path='sent' element={<ApplSent />} />

@@ -2,7 +2,6 @@
   "name": "jobbler",
   "private": true,
   "version": "0.0.0",
-  "proxy": "http://localhost:3000",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -17,6 +16,7 @@
     "@mui/material": "^5.11.13",
     "@reduxjs/toolkit": "^1.9.3",
     "react": "^18.2.0",
+    "react-auth-kit": "^2.8.2",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0"
   },
