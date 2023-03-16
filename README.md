@@ -78,13 +78,16 @@
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
-
-<img style='max-width: 500px' src='./src/assets/readmepreview.png'>
-
-App is made especially for new developers (myself included) to help them track job applications.
-<br>
+App is made especially for new developers (myself included) to help them track job applications. <br>
 For backend side of the project check out this repo:
 https://github.com/TerroR75/jobbler-backend
+
+
+![image](https://user-images.githubusercontent.com/83674512/225723540-49f138be-c3dc-4545-bd73-d4fb98cb64d2.png)
+![image](https://user-images.githubusercontent.com/83674512/225723671-b79851cc-9a35-40df-ac37-3e5b5f786e7d.png)
+![image](https://user-images.githubusercontent.com/83674512/225723762-66525f6d-2b6b-4ed2-b31c-841c8c08f5c5.png)
+
+<br>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
