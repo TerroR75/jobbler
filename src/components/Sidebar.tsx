@@ -114,7 +114,6 @@ function Sidebar() {
           </ListItemIcon>
           <ListItemText primary='Logout' />
         </ListItem>
-        ;
       </Box>
     </Drawer>
   );

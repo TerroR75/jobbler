@@ -63,7 +63,7 @@ function App() {
             <BrowserRouter>
               <Routes>
                 <Route path='/' element={<Home />} />
-                <Route path='/signin' element={<SignIn />} />
+                <Route path='/signin' element={<SignIn darkModeEnabled={darkMode} />} />
                 <Route
                   path='dashboard'
                   element={

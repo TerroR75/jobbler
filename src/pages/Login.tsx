@@ -45,14 +45,14 @@ function Login(props: any) {
       try {
         const response = await axios.post('/api/auth/login', values);
         setResponseError('');
+
         signIn({
           token: response.data.token,
           expiresIn: 3600,
           tokenType: 'Bearer',
-          authState: { email: values.email, name: response.data.name },
+          authState: { id: response.data.userId, name: response.data.name },
         });
 
-        console.log(response);
         setIsButtonDisabled(true);
         setTimeout(() => {
           navigate('/dashboard');
