@@ -1,5 +1,7 @@
+import { useState } from 'react';
+
 // MUI Components
-import { Drawer, Box, Typography, Divider } from '@mui/material';
+import { Drawer, Box, Typography, Divider, Toolbar } from '@mui/material';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -16,7 +18,7 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { useNavigate } from 'react-router-dom';
 import { useSignOut } from 'react-auth-kit';
 
-const drawerWidth = 250;
+const drawerWidth = 230;
 const classes = {
   drawer: {
     padding: '50px',
@@ -33,89 +35,121 @@ type Link = {
   icon: JSX.Element;
   path: string;
 };
-
-function Sidebar() {
+const links: Link[][] = [
+  [
+    {
+      name: 'Sent',
+      icon: <ScheduleSendOutlinedIcon color='primary' />,
+      path: 'sent',
+    },
+    {
+      name: 'Response',
+      icon: <MarkEmailReadOutlinedIcon color='primary' />,
+      path: 'response',
+    },
+    {
+      name: 'Archived',
+      icon: <Inventory2OutlinedIcon color='primary' />,
+      path: 'archived',
+    },
+  ],
+  [
+    {
+      name: 'Profile',
+      icon: <AccountBoxOutlinedIcon color='primary' />,
+      path: 'profile',
+    },
+    {
+      name: 'Settings',
+      icon: <SettingsOutlinedIcon color='primary' />,
+      path: 'settings',
+    },
+  ],
+];
+function Sidebar(props: any) {
   const history = useNavigate();
   const signOut = useSignOut();
-  const links: Link[][] = [
-    [
-      {
-        name: 'Sent',
-        icon: <ScheduleSendOutlinedIcon color='primary' />,
-        path: 'sent',
-      },
-      {
-        name: 'Response',
-        icon: <MarkEmailReadOutlinedIcon color='primary' />,
-        path: 'response',
-      },
-      {
-        name: 'Archived',
-        icon: <Inventory2OutlinedIcon color='primary' />,
-        path: 'archived',
-      },
-    ],
-    [
-      {
-        name: 'Profile',
-        icon: <AccountBoxOutlinedIcon color='primary' />,
-        path: 'profile',
-      },
-      {
-        name: 'Settings',
-        icon: <SettingsOutlinedIcon color='primary' />,
-        path: 'settings',
-      },
-    ],
-  ];
 
-  function logout() {
+  const handleDrawerToggle = () => {
+    props.mobileDrawer.modalOpenClose(!props.mobileDrawer.modalState);
+  };
+
+  const logout = () => {
     signOut();
     history('/signin');
-  }
+  };
+
+  const navLinks = (
+    <div>
+      {links[0].map((link, index): JSX.Element => {
+        return (
+          <ListItem
+            onClick={() => {
+              history(link.path);
+            }}
+            button
+            key={index}
+          >
+            <ListItemIcon>{link.icon}</ListItemIcon>
+            <ListItemText primary={link.name} />
+          </ListItem>
+        );
+      })}
+    </div>
+  );
+  const settingsLinks = (
+    <div>
+      <Divider variant='middle' />
+      {links[1].map((link, index): JSX.Element => {
+        return (
+          <ListItem
+            onClick={() => {
+              history(link.path);
+            }}
+            button
+            key={index}
+          >
+            <ListItemIcon>{link.icon}</ListItemIcon>
+            <ListItemText primary={link.name} />
+          </ListItem>
+        );
+      })}
+      <ListItem onClick={logout} button>
+        <ListItemIcon>
+          <LogoutOutlinedIcon color='primary' />
+        </ListItemIcon>
+        <ListItemText primary='Logout' />
+      </ListItem>
+    </div>
+  );
 
   return (
-    <Drawer sx={classes.drawer} anchor='left' variant='permanent'>
-      <Box>
-        {links[0].map((link, index): JSX.Element => {
-          return (
-            <ListItem
-              onClick={() => {
-                history(link.path);
-              }}
-              button
-              key={index}
-            >
-              <ListItemIcon>{link.icon}</ListItemIcon>
-              <ListItemText primary={link.name} />
-            </ListItem>
-          );
-        })}
-      </Box>
-      <Box sx={{ marginTop: 'auto' }}>
-        <Divider variant='middle' />
-        {links[1].map((link, index): JSX.Element => {
-          return (
-            <ListItem
-              onClick={() => {
-                history(link.path);
-              }}
-              button
-              key={index}
-            >
-              <ListItemIcon>{link.icon}</ListItemIcon>
-              <ListItemText primary={link.name} />
-            </ListItem>
-          );
-        })}
-        <ListItem onClick={logout} button>
-          <ListItemIcon>
-            <LogoutOutlinedIcon color='primary' />
-          </ListItemIcon>
-          <ListItemText primary='Logout' />
-        </ListItem>
-      </Box>
-    </Drawer>
+    <div>
+      <Drawer sx={[classes.drawer, { display: { xs: 'none', md: 'block' } }]} anchor='left' variant='permanent'>
+        <Toolbar>
+          <Typography variant='h6'>Hi, {props.user.name}!</Typography>
+        </Toolbar>
+        <Box>{navLinks}</Box>
+        <Box sx={{ marginTop: 'auto' }}>{settingsLinks}</Box>
+      </Drawer>
+      <Drawer
+        ModalProps={{
+          keepMounted: true,
+        }}
+        open={props.mobileDrawer.modalState}
+        onClose={handleDrawerToggle}
+        sx={{
+          display: { xs: 'block', md: 'none' },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+        }}
+      >
+        <Toolbar>
+          <Typography variant='h6'>Hi, {props.user.name}!</Typography>
+        </Toolbar>
+        <Box>{navLinks}</Box>
+        <Box sx={{ marginTop: 'auto' }}>{settingsLinks}</Box>
+      </Drawer>
+    </div>
   );
 }
 
