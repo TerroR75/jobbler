@@ -5,6 +5,8 @@ import { darkThemeOptions, lightThemeOptions } from './themes/main';
 import { Box, Paper } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import './App.css';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 // ROUTE PAGES
 import Home from './pages/Home';
@@ -57,33 +59,38 @@ function App() {
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-      <Box sx={{ minWidth: '100vw', minHeight: '100vh' }}>
-        <Paper sx={{ borderRadius: '0' }}>
-          <AuthProvider authType={'cookie'} authName={'_auth'} cookieDomain={window.location.hostname} cookieSecure={false}>
-            <BrowserRouter>
-              <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='/signin' element={<SignIn darkModeEnabled={darkMode} />} />
-                <Route
-                  path='dashboard'
-                  element={
-                    <RequireAuth loginPath='/signin'>
-                      <Dashboard />
-                    </RequireAuth>
-                  }
-                >
-                  <Route index element={<ApplSent />} />
-                  <Route path='sent' element={<ApplSent />} />
-                  <Route path='response' element={<ApplResponse />} />
-                  <Route path='archived' element={<ApplArchived />} />
-                  <Route path='settings' element={<Settings isDarkModeEnabled={darkMode} changeDarkMode={handleThemeChage} />} />
-                  <Route path='profile' element={<Profile />} />
-                </Route>
-              </Routes>
-            </BrowserRouter>
-          </AuthProvider>
-        </Paper>
-      </Box>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Box sx={{ minWidth: '100vw', minHeight: '100vh' }}>
+          <Paper sx={{ borderRadius: '0' }}>
+            <AuthProvider authType={'cookie'} authName={'_auth'} cookieDomain={window.location.hostname} cookieSecure={false}>
+              <BrowserRouter>
+                <Routes>
+                  <Route path='/' element={<Home />} />
+                  <Route path='/signin' element={<SignIn darkModeEnabled={darkMode} />} />
+                  <Route
+                    path='dashboard'
+                    element={
+                      <RequireAuth loginPath='/signin'>
+                        <Dashboard />
+                      </RequireAuth>
+                    }
+                  >
+                    <Route index element={<ApplSent />} />
+                    <Route path='sent' element={<ApplSent />} />
+                    <Route path='response' element={<ApplResponse />} />
+                    <Route path='archived' element={<ApplArchived />} />
+                    <Route
+                      path='settings'
+                      element={<Settings isDarkModeEnabled={darkMode} changeDarkMode={handleThemeChage} />}
+                    />
+                    <Route path='profile' element={<Profile />} />
+                  </Route>
+                </Routes>
+              </BrowserRouter>
+            </AuthProvider>
+          </Paper>
+        </Box>
+      </LocalizationProvider>
     </ThemeProvider>
   );
 }
