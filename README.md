@@ -211,6 +211,8 @@ Don't forget to give the project a star! Thanks again!
 2. To get access to the dashboard without database authorization follow these instructions:
 
 - Go to `App.tsx` file and comment out line 73 and 75.
+![image](https://user-images.githubusercontent.com/83674512/226416428-dd117123-ec27-4108-9eb3-8e21b87cc370.png)
+
   <br>
 
 Continue with steps 6-10 from Full stack
