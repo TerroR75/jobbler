@@ -1,5 +1,6 @@
 import { Box, Button, Divider, FormGroup, Paper, TextField, Typography } from '@mui/material';
 import Summary from './Summary';
+import ApplList from './ApplList';
 import { classes } from '../styles/classes';
 
 // New application form validation
@@ -47,7 +48,7 @@ function ApplSent() {
       <form method='POST' onSubmit={formik.handleSubmit}>
         <Paper elevation={3} sx={{ m: 1, p: 3, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '24px' }}>
           <Box sx={{ position: 'relative', py: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <Typography sx={classes.alignCenterAbsoluteTop} variant='h4' component='h2'>
+            <Typography sx={classes.alignCenterAbsoluteTop} variant='h5' component='h2'>
               New
             </Typography>
             <FormGroup
@@ -94,10 +95,11 @@ function ApplSent() {
             </Box>
           </Box>
 
-          <Box sx={{ position: 'relative', border: '1px solid red', flexGrow: 1 }}>
-            <Typography sx={classes.alignCenterAbsoluteTop} variant='h4' component='h2'>
+          <Box sx={{ position: 'relative', flexGrow: 1 }}>
+            <Typography sx={classes.alignCenterAbsoluteTop} variant='h5' component='h2'>
               List
             </Typography>
+            <ApplList user={auth()} />
           </Box>
         </Paper>
       </form>

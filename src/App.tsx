@@ -65,14 +65,14 @@ function App() {
             <AuthProvider authType={'cookie'} authName={'_auth'} cookieDomain={window.location.hostname} cookieSecure={false}>
               <BrowserRouter>
                 <Routes>
-                  <Route path='/' element={<Home />} />
+                  <Route path='/' element={<SignIn darkModeEnabled={darkMode} />} />
                   <Route path='/signin' element={<SignIn darkModeEnabled={darkMode} />} />
                   <Route
                     path='dashboard'
                     element={
-                      <RequireAuth loginPath='/signin'>
-                        <Dashboard />
-                      </RequireAuth>
+                      // <RequireAuth loginPath='/signin'>
+                      <Dashboard />
+                      // </RequireAuth>
                     }
                   >
                     <Route index element={<ApplSent />} />
