@@ -78,10 +78,10 @@
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
+
 App is made especially for new developers (myself included) to help them track job applications. <br>
 For backend side of the project check out this repo:
 https://github.com/TerroR75/jobbler-backend
-
 
 ![image](https://user-images.githubusercontent.com/83674512/225723540-49f138be-c3dc-4545-bd73-d4fb98cb64d2.png)
 ![image](https://user-images.githubusercontent.com/83674512/225723671-b79851cc-9a35-40df-ac37-3e5b5f786e7d.png)
@@ -157,10 +157,13 @@ Tracking job applications, creating CV and keeping track of your learning resour
 
 It's just a general idea for now and it may change in the future.
 
-- [ ] Database - either in C# or PHP
-  - [ ] Authentication
-  - [ ] CRUD
-  - [ ] Data encryption
+- [x] Database - NodeJS + MySQL
+  - [x] Authentication
+  - [ ] Email confirmation system
+  - [ ] CRUD for users
+  - [ ] CRUD for applications
+  - [x] Password encryption
+  - [ ] Email encryption
 - [ ] Free in app CV Creator
 - [ ] Notifications
 - [ ] Analytics
@@ -179,12 +182,38 @@ Contributions are what make the open source community such an amazing place to l
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
 
-1. Fork the Project
-2. Create your feature branch (`git branch BRANCH-NAME`)
-3. Change to your new branch (`git checkout BRANCH-NAME`)
-4. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-5. Push to the branch (`git push origin feature/AmazingFeature`)
-6. Open a Pull Request
+### Full stack
+
+1. Fork the Project and fork the [backend](https://github.com/TerroR75/jobbler-backend)
+2. Configure `.env` file inside backend repo:
+
+- APP_PORT=
+
+- MYSQL_HOST='127.0.0.1'
+- MYSQL_USER='root'
+- MYSQL_PASSWORD=
+- MYSQL_DATABASE='jobbler'
+
+- JWT_SECRET=
+
+3. Launch Apache and MySQL services through your MySQL control panel (e.g. XAMPP)
+4. Create new MySQL database called "jobbler"
+5. Use provided file `schema.sql` inside backend repo
+6. Create your feature branch (`git branch BRANCH-NAME`)
+7. Change to your new branch (`git checkout BRANCH-NAME`)
+8. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+9. Push to the branch (`git push origin feature/AmazingFeature`)
+10. Open a Pull Request
+
+### Front only
+
+1. Fork the project
+2. To get access to the dashboard without database authorization follow these instructions:
+
+- Go to `App.tsx` file and comment out line 73 and 75.
+  <br>
+
+Continue with steps 6-10 from Full stack
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
