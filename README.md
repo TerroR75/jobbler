@@ -164,8 +164,9 @@ It's just a general idea for now and it may change in the future.
   - [ ] CRUD for applications
   - [x] Password encryption
   - [ ] Email encryption
-- [ ] Free in app CV Creator
-- [ ] Notifications
+- [ ] Section with advices for CV creation
+- [ ] Recommended learning resources
+- [ ] Notifications (like new promotional offers on Udemy)
 - [ ] Analytics
   - [ ] Graphs
 
